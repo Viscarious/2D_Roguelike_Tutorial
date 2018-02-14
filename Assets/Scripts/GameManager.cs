@@ -4,8 +4,23 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    public BoardManager boardManager;
+
+    private int level = 3;
+
+    void Awake()
+    {
+        boardManager = GetComponent<BoardManager>();
+        InitGame();
+    }
+
+    public void InitGame()
+    {
+        boardManager.SetupScene(level);
+    }
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
