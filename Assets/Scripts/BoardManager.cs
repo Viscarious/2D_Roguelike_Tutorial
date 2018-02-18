@@ -18,7 +18,9 @@ public class BoardManager : MonoBehaviour {
         }
     }
 
+    //number of columns on the gameboard
     public int columns = 8;
+    //number of rows on the gameboard
     public int rows = 8;
     public Count wallCount = new Count(5, 9);
     public Count foodCount = new Count(1, 5);
@@ -29,9 +31,16 @@ public class BoardManager : MonoBehaviour {
     public GameObject[] enemyTiles;
     public GameObject[] outerWallTiles;
 
+    //Every object in a scene has a Transform. It's used to store and manipulate the position, rotation and scale of the object. 
+    //Every Transform can have a parent, which allows you to apply position, rotation and scale hierarchically
     private Transform boardHolder;
+
+    //A list of Vector gridpositions
     private List<Vector3> gridPositions = new List<Vector3>();
 
+    /// <summary>
+    /// Clear out and create a list of Vector3 grid positions for each 'grid item' in the game
+    /// </summary>
     void InitializeList()
     {
         gridPositions.Clear();
@@ -47,28 +56,34 @@ public class BoardManager : MonoBehaviour {
 
     void BoardSetup()
     {
+        //creates an object to act as a 'transform' parent object
         boardHolder = new GameObject("Board").transform;
 
+        //iterates through all the positions on the GameBoard
         for (int x = -1; x < columns + 1; x++)
         {
             for (int y = -1; y < rows + 1; y++)
             {
+                //creates a floor tile
                 GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
 
+                //if we're on the edge of the board create a wall instead of a floor itle
                 if(x == -1 || x == columns || y == -1 || y == rows)
                 {
                     toInstantiate = outerWallTiles[Random.Range(0, outerWallTiles.Length)];
                 }
 
+                //instantiates the object to be placed on the game
                 GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
 
+                //sets a parent the boardholder as the parent object
                 instance.transform.SetParent(boardHolder);
             }
         }
     }
 
     /// <summary>
-    /// Gets a random position, then removes that from the list of gridpositions
+    /// Gets a random Vector3 position, then removes that from the list of gridpositions
     /// </summary>
     /// <returns></returns>
     Vector3 RandomPosition()
@@ -82,6 +97,12 @@ public class BoardManager : MonoBehaviour {
         return randomPosition;
     }
 
+    /// <summary>
+    /// Lays objects around the gameboard at random
+    /// </summary>
+    /// <param name="tileArray"></param>
+    /// <param name="minimum"></param>
+    /// <param name="maximum"></param>
     void LayoutObjectAtRandom(GameObject[] tileArray, int minimum, int maximum)
     {
         int objectCount = Random.Range(minimum, maximum + 1);
