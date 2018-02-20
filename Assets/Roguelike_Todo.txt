@@ -1,0 +1,14 @@
+TODO:
+
+1. Create Start Screen
+2. Create Pause Menu
+3. Add a button to resume
+4. Add a button to restart
+5. Add a button to return to start screen
+
+Updated Roguelike --> Change to action
+1. Add a thumb button to move the character around in a freeform way
+2. Enable the character to attack the enemies
+3. Add a button to 'block'
+4. Enable one of the enemies to 'shoot' the player
+5. Make the map bigger
