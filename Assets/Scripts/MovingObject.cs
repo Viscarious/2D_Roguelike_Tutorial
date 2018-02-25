@@ -9,6 +9,7 @@ public abstract class MovingObject : MonoBehaviour {
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rigidBody2D;
+    private SpriteRenderer spriteRenderer;
     private float inverseMoveTime;
 
 	// Use this for initialization
@@ -16,6 +17,7 @@ public abstract class MovingObject : MonoBehaviour {
     {
         boxCollider = GetComponent<BoxCollider2D>();
         rigidBody2D = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         inverseMoveTime = 1f / moveTime;
 	}
@@ -33,6 +35,15 @@ public abstract class MovingObject : MonoBehaviour {
     {
         Vector2 start = transform.position;
         Vector2 end = start + new Vector2(xDir, yDir);
+
+        if(xDir < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (xDir > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
 
         boxCollider.enabled = false;
         hit = Physics2D.Linecast(start, end, blockingLayer);
@@ -94,4 +105,19 @@ public abstract class MovingObject : MonoBehaviour {
 
     protected abstract void OnCantMove<T>(T component)
         where T : Component;
+
+
+    protected void SetRandomDirection()
+    {
+        int randomDirection = Random.Range(0, 2);
+
+        if (randomDirection == 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else
+        {
+            spriteRenderer.flipX = true;
+        }
+    }
 }

@@ -1,10 +1,11 @@
 TODO:
 
-1. Create Start Screen
-2. Create Pause Menu
-3. Add a button to resume
-4. Add a button to restart
-5. Add a button to return to start screen
+1. Create Start Screen - done
+2. Create Pause Menu - done
+3. Add a button to resume - done
+4. Add a button to restart - done
+5. Add a button to return to start screen -done
+6. Flip sprites to face direction they're moving - done
 
 Updated Roguelike --> Change to action
 1. Add a thumb button to move the character around in a freeform way

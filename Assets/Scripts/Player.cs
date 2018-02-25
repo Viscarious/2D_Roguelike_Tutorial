@@ -20,6 +20,10 @@ public class Player : MovingObject
     public AudioClip drinkSound1;
     public AudioClip drinkSound2;
     public AudioClip gameOverSound;
+    public AudioClip injuredSound1;
+    public AudioClip injuredSound2;
+    public AudioClip injuredSound3;
+    public AudioClip alrightSound;
 
     public Text foodText;
     private Animator animator;
@@ -46,12 +50,12 @@ public class Player : MovingObject
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.instance.playersTurn) return;
+        if (!GameManager.instance.playersTurn || GameManager.instance.IsPaused || GameManager.instance.LevelTransitionScreenActive) return;
 
         int horizontal = 0;
         int vertical = 0;
 
-#if UNITY_STANDALONE || UNITY_WEBPLAYER
+#if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
 
         horizontal = (int)Input.GetAxisRaw("Horizontal");
         vertical = (int)Input.GetAxisRaw("Vertical");
@@ -125,6 +129,8 @@ public class Player : MovingObject
     {
         if (other.tag == "Exit")
         {
+            SoundManager.instance.RandomizeSfx(alrightSound);
+            GameManager.instance.IncrementLevel();
             Invoke("Restart", restartLevelDelay);
             enabled = false;
         }
@@ -146,7 +152,7 @@ public class Player : MovingObject
 
     private void Restart()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Main");
     }
 
     public void LoseFood(int loss)
@@ -154,6 +160,7 @@ public class Player : MovingObject
         animator.SetTrigger("playerHit");
         food -= loss;
         foodText.text = "-" + loss + " Food: " + food;
+        SoundManager.instance.RandomizeSfx(injuredSound1, injuredSound2, injuredSound3);
         CheckIfGameOver();
     }
 

@@ -19,6 +19,8 @@ public class Enemy : MovingObject {
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         base.Start();
+
+        base.SetRandomDirection();
 	}
 	
     protected override void AttemptMove<T>(int xDir, int yDir)

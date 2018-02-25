@@ -19,11 +19,11 @@ public class BoardManager : MonoBehaviour {
     }
 
     //number of columns on the gameboard
-    public int columns = 8;
+    public int columns;
     //number of rows on the gameboard
-    public int rows = 8;
-    public Count wallCount = new Count(5, 9);
-    public Count foodCount = new Count(1, 5);
+    public int rows;
+    public Count wallCount = new Count(10, 20);
+    public Count foodCount = new Count(2, 5);
     public GameObject exit;
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
@@ -45,7 +45,7 @@ public class BoardManager : MonoBehaviour {
     {
         gridPositions.Clear();
 
-        for (int x = 1; x < columns - 1; x++)
+        for (int x = -4; x < columns - 1; x++)
         {
             for (int y = 1; y < rows - 1; y++)
             {
@@ -60,7 +60,8 @@ public class BoardManager : MonoBehaviour {
         boardHolder = new GameObject("Board").transform;
 
         //iterates through all the positions on the GameBoard
-        for (int x = -1; x < columns + 1; x++)
+        // x and y represent the actual position on the Gameboard
+        for (int x = -5; x < columns + 1; x++)
         {
             for (int y = -1; y < rows + 1; y++)
             {
@@ -68,7 +69,7 @@ public class BoardManager : MonoBehaviour {
                 GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
 
                 //if we're on the edge of the board create a wall instead of a floor itle
-                if(x == -1 || x == columns || y == -1 || y == rows)
+                if(x == -5 || x == columns || y == -1 || y == rows)
                 {
                     toInstantiate = outerWallTiles[Random.Range(0, outerWallTiles.Length)];
                 }
